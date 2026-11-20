@@ -18,8 +18,14 @@ ENV MODEL_HIGH_FILE=${MODEL_HIGH_FILE}
 ENV MODEL_LOW_FILE=${MODEL_LOW_FILE}
 ENV MODEL_REPO=${MODEL_REPO}
 ENV COMFYUI_PATH=/ComfyUI
+# Build 7d57576c failed with "huggingface-cli: command not found" even
+# though huggingface_hub 1.7.2 was installed in /opt/venv: /opt/venv/bin
+# was not on PATH in the build shell. Put it first so `hf`, `pip` and
+# `python3` all resolve to the venv consistently.
+ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip install --no-cache-dir "huggingface_hub>=0.27" runpod
+RUN pip install --no-cache-dir "huggingface_hub>=0.27" runpod && \
+  (command -v hf >/dev/null && hf --version || echo "note: hf CLI not on PATH after install; download_models.sh falls back to the python API")
 
 # Custom nodes required by api-workflow.json (same set as Gusdev06):
 # FastUnsharpSharpen (comfyui-vrgamedevgirl), Seed (rgthree-comfy),
