@@ -1,1 +1,293 @@
-{"103":{"_meta":{"title":"UNETLoader"},"class_type":"UNETLoader","inputs":{"unet_name":"Wan2.2_Remix_NSFW_i2v_14b_low_lighting_fp8_e4m3fn_v3.0.safetensors","weight_dtype":"fp8_e4m3fn"}},"104":{"_meta":{"title":"FastUnsharpSharpen"},"class_type":"FastUnsharpSharpen","inputs":{"images":["8",0]}},"105":{"_meta":{"title":"Seed (rgthree)"},"class_type":"Seed (rgthree)","inputs":{"seed":-1}},"106":{"_meta":{"title":"LoadImage (start image)"},"class_type":"LoadImage","inputs":{"image":"start_image.png"}},"107":{"_meta":{"title":"WanFirstLastFrameToVideo"},"class_type":"WanFirstLastFrameToVideo","inputs":{"batch_size":1,"end_image":["108",0],"height":1280,"length":161,"negative":["7",0],"positive":["6",0],"start_image":["106",0],"vae":["39",0],"width":720}},"108":{"_meta":{"title":"LoadImage (end image)"},"class_type":"LoadImage","inputs":{"image":"end_image.png"}},"39":{"_meta":{"title":"VAELoader"},"class_type":"VAELoader","inputs":{"vae_name":"wan_2.1_vae.safetensors"}},"54":{"_meta":{"title":"ModelSamplingSD3"},"class_type":"ModelSamplingSD3","inputs":{"model":["77",0],"shift":2}},"55":{"_meta":{"title":"ModelSamplingSD3"},"class_type":"ModelSamplingSD3","inputs":{"model":["103",0],"shift":2}},"57":{"_meta":{"title":"KSamplerAdvanced"},"class_type":"KSamplerAdvanced","inputs":{"add_noise":"enable","cfg":1,"end_at_step":["67",0],"latent_image":["107",2],"model":["54",0],"negative":["107",1],"noise_seed":["105",0],"positive":["107",0],"return_with_leftover_noise":"enable","sampler_name":"euler","scheduler":"simple","start_at_step":0,"steps":["68",0]}},"58":{"_meta":{"title":"KSamplerAdvanced"},"class_type":"KSamplerAdvanced","inputs":{"add_noise":"disable","cfg":1,"end_at_step":10000,"latent_image":["57",0],"model":["55",0],"negative":["107",1],"noise_seed":["105",0],"positive":["107",0],"return_with_leftover_noise":"disable","sampler_name":"euler","scheduler":"simple","start_at_step":["67",0],"steps":["68",0]}},"6":{"_meta":{"title":"CLIP Text Encode (Positive Prompt)"},"class_type":"CLIPTextEncode","inputs":{"clip":["97",0],"text":"A smooth continuous video that begins at the first image and ends at the last image, natural motion, cinematic lighting, detailed"}},"67":{"_meta":{"title":"Split_step"},"class_type":"INTConstant","inputs":{"value":3}},"68":{"_meta":{"title":"Steps"},"class_type":"INTConstant","inputs":{"value":8}},"7":{"_meta":{"title":"CLIP Text Encode (Negative Prompt)"},"class_type":"CLIPTextEncode","inputs":{"clip":["97",0],"text":"low quality, worst quality, blurry, out of focus, motion blur, deformed, ugly, bad anatomy, extra limbs, mutated hands, poorly drawn hands, text, watermark, logo, censored, mosaic censor, black bars, plastic skin, doll-like, uncanny valley, overexposed, underexposed, bad lighting, flat lighting, jpeg artifacts, pixelated, noisy, grainy"}},"77":{"_meta":{"title":"UNETLoader"},"class_type":"UNETLoader","inputs":{"unet_name":"Wan2.2_Remix_NSFW_i2v_14b_high_lighting_fp8_e4m3fn_v3.0.safetensors","weight_dtype":"fp8_e4m3fn"}},"8":{"_meta":{"title":"VAEDecode"},"class_type":"VAEDecode","inputs":{"samples":["58",0],"vae":["39",0]}},"97":{"_meta":{"title":"CLIPLoader"},"class_type":"CLIPLoader","inputs":{"clip_name":"nsfw_wan_umt5-xxl_fp8_scaled.safetensors","device":"default","type":"wan"}},"99":{"_meta":{"title":"VHS_VideoCombine"},"class_type":"VHS_VideoCombine","inputs":{"crf":19,"filename_prefix":"%date:yyyy-MM-dd%/%date:yyyyMMdd_hhmmss%_Wan2.2","format":"video/h264-mp4","frame_rate":16,"images":["104",0],"loop_count":0,"pingpong":false,"pix_fmt":"yuv420p","save_metadata":true,"save_output":true,"trim_to_audio":false}}}
+{
+  "103": {
+    "_meta": {
+      "title": "UNETLoader"
+    },
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "Wan2.2_Remix_NSFW_i2v_14b_low_lighting_fp8_e4m3fn_v3.0.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    }
+  },
+  "105": {
+    "_meta": {
+      "title": "Seed (rgthree)"
+    },
+    "class_type": "Seed (rgthree)",
+    "inputs": {
+      "seed": -1
+    }
+  },
+  "106": {
+    "_meta": {
+      "title": "LoadImage (start image)"
+    },
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "start_image.png"
+    }
+  },
+  "107": {
+    "_meta": {
+      "title": "WanFirstLastFrameToVideo"
+    },
+    "class_type": "WanFirstLastFrameToVideo",
+    "inputs": {
+      "batch_size": 1,
+      "end_image": [
+        "108",
+        0
+      ],
+      "height": 1280,
+      "length": 161,
+      "negative": [
+        "7",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "start_image": [
+        "106",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ],
+      "width": 720
+    }
+  },
+  "108": {
+    "_meta": {
+      "title": "LoadImage (end image)"
+    },
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "end_image.png"
+    }
+  },
+  "39": {
+    "_meta": {
+      "title": "VAELoader"
+    },
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    }
+  },
+  "54": {
+    "_meta": {
+      "title": "ModelSamplingSD3"
+    },
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": [
+        "77",
+        0
+      ],
+      "shift": 2
+    }
+  },
+  "55": {
+    "_meta": {
+      "title": "ModelSamplingSD3"
+    },
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": [
+        "103",
+        0
+      ],
+      "shift": 2
+    }
+  },
+  "57": {
+    "_meta": {
+      "title": "KSamplerAdvanced"
+    },
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "add_noise": "enable",
+      "cfg": 1,
+      "end_at_step": [
+        "67",
+        0
+      ],
+      "latent_image": [
+        "107",
+        2
+      ],
+      "model": [
+        "54",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ],
+      "noise_seed": [
+        "105",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "return_with_leftover_noise": "enable",
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "start_at_step": 0,
+      "steps": [
+        "68",
+        0
+      ]
+    }
+  },
+  "58": {
+    "_meta": {
+      "title": "KSamplerAdvanced"
+    },
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "add_noise": "disable",
+      "cfg": 1,
+      "end_at_step": 10000,
+      "latent_image": [
+        "57",
+        0
+      ],
+      "model": [
+        "55",
+        0
+      ],
+      "negative": [
+        "107",
+        1
+      ],
+      "noise_seed": [
+        "105",
+        0
+      ],
+      "positive": [
+        "107",
+        0
+      ],
+      "return_with_leftover_noise": "disable",
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "start_at_step": [
+        "67",
+        0
+      ],
+      "steps": [
+        "68",
+        0
+      ]
+    }
+  },
+  "6": {
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    },
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "97",
+        0
+      ],
+      "text": "A smooth continuous video that begins at the first image and ends at the last image, natural motion, cinematic lighting, detailed"
+    }
+  },
+  "67": {
+    "_meta": {
+      "title": "Split_step"
+    },
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 3
+    }
+  },
+  "68": {
+    "_meta": {
+      "title": "Steps"
+    },
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 8
+    }
+  },
+  "7": {
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    },
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "97",
+        0
+      ],
+      "text": "low quality, worst quality, blurry, out of focus, motion blur, deformed, ugly, bad anatomy, extra limbs, mutated hands, poorly drawn hands, text, watermark, logo, censored, mosaic censor, black bars, plastic skin, doll-like, uncanny valley, overexposed, underexposed, bad lighting, flat lighting, jpeg artifacts, pixelated, noisy, grainy"
+    }
+  },
+  "77": {
+    "_meta": {
+      "title": "UNETLoader"
+    },
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "Wan2.2_Remix_NSFW_i2v_14b_high_lighting_fp8_e4m3fn_v3.0.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    }
+  },
+  "8": {
+    "_meta": {
+      "title": "VAEDecode"
+    },
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "58",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ]
+    }
+  },
+  "97": {
+    "_meta": {
+      "title": "CLIPLoader"
+    },
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
+      "device": "default",
+      "type": "wan"
+    }
+  },
+  "99": {
+    "_meta": {
+      "title": "VHS_VideoCombine"
+    },
+    "class_type": "VHS_VideoCombine",
+    "inputs": {
+      "crf": 19,
+      "filename_prefix": "%date:yyyy-MM-dd%/%date:yyyyMMdd_hhmmss%_Wan2.2",
+      "format": "video/h264-mp4",
+      "frame_rate": 16,
+      "images": [
+        "8",
+        0
+      ],
+      "loop_count": 0,
+      "pingpong": false,
+      "pix_fmt": "yuv420p",
+      "save_metadata": true,
+      "save_output": true,
+      "trim_to_audio": false
+    }
+  }
+}

@@ -172,10 +172,16 @@ def handler(job):
             with open(img_path, "wb") as f:
                 f.write(base64.b64decode(inp[key]))
 
+    # 2026-11-20: surface ComfyUI's /prompt error body. The first 400 here
+    # ("Bad Request") hid which node/input was invalid; raise_for_status()
+    # alone discards the body that names it.
     resp = requests.post(
         f"{COMFY_URL}/prompt", json={"prompt": workflow}, timeout=60
     )
-    resp.raise_for_status()
+    if resp.status_code != 200:
+        raise RuntimeError(
+            f"ComfyUI /prompt failed ({resp.status_code}): {resp.text[:3000]}"
+        )
     prompt_id = resp.json()["prompt_id"]
 
     deadline = time.time() + timeout
