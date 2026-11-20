@@ -40,7 +40,7 @@ import requests
 import runpod
 
 COMFY_URL = os.environ.get("COMFY_API_URL", "http://127.0.0.1:8188")
-COMFY_PATH = os.environ.get("COMFYUI_PATH", "/ComfyUI")
+COMFY_PATH = os.environ.get("COMFYUI_PATH", "/comfyui")
 MODEL_HIGH_FILE = os.environ.get(
     "MODEL_HIGH_FILE",
     "Wan2.2_Remix_NSFW_i2v_14b_high_lighting_fp8_e4m3fn_v3.0.safetensors",

@@ -87,17 +87,17 @@ if [ -z "$MODEL_HIGH_FILE" ] || [ -z "$MODEL_LOW_FILE" ]; then
   exit 1
 fi
 
-mkdir -p /ComfyUI/models/diffusion_models /ComfyUI/models/text_encoders /ComfyUI/models/vae /ComfyUI/models/loras
+mkdir -p /comfyui/models/diffusion_models /comfyui/models/text_encoders /comfyui/models/vae /comfyui/models/loras
 
 echo "Downloading Remix 14B HIGH: $MODEL_HIGH_FILE"
 hf_download "$MODEL_REPO" "$MODEL_SUBDIR/$MODEL_HIGH_FILE" \
   --local-dir /tmp/remix
-cp "/tmp/remix/$MODEL_SUBDIR/$MODEL_HIGH_FILE" "/ComfyUI/models/diffusion_models/$MODEL_HIGH_FILE"
+cp "/tmp/remix/$MODEL_SUBDIR/$MODEL_HIGH_FILE" "/comfyui/models/diffusion_models/$MODEL_HIGH_FILE"
 
 echo "Downloading Remix 14B LOW: $MODEL_LOW_FILE"
 hf_download "$MODEL_REPO" "$MODEL_SUBDIR/$MODEL_LOW_FILE" \
   --local-dir /tmp/remix
-cp "/tmp/remix/$MODEL_SUBDIR/$MODEL_LOW_FILE" "/ComfyUI/models/diffusion_models/$MODEL_LOW_FILE"
+cp "/tmp/remix/$MODEL_SUBDIR/$MODEL_LOW_FILE" "/comfyui/models/diffusion_models/$MODEL_LOW_FILE"
 
 echo "Downloading NSFW-tuned umt5 fp8 text encoder (Osrivers, as used by Gusdev06)"
 # api-workflow.json CLIPLoader expects nsfw_wan_umt5-xxl_fp8_scaled.safetensors.
@@ -105,19 +105,19 @@ echo "Downloading NSFW-tuned umt5 fp8 text encoder (Osrivers, as used by Gusdev0
 # do not mix the two filenames.
 hf_download Osrivers/nsfw_wan_umt5-xxl_fp8_scaled.safetensors nsfw_wan_umt5-xxl_fp8_scaled.safetensors \
   --local-dir /tmp/t5
-cp /tmp/t5/nsfw_wan_umt5-xxl_fp8_scaled.safetensors /ComfyUI/models/text_encoders/
+cp /tmp/t5/nsfw_wan_umt5-xxl_fp8_scaled.safetensors /comfyui/models/text_encoders/
 
 echo "Downloading wan_2.1_vae (14B models use this, NOT wan2.2_vae)"
 hf_download Comfy-Org/Wan_2.2_ComfyUI_Repackaged split_files/vae/wan_2.1_vae.safetensors \
   --local-dir /tmp/vae
-cp /tmp/vae/split_files/vae/wan_2.1_vae.safetensors /ComfyUI/models/vae/ || \
-  cp /tmp/vae/wan_2.1_vae.safetensors /ComfyUI/models/vae/
+cp /tmp/vae/split_files/vae/wan_2.1_vae.safetensors /comfyui/models/vae/ || \
+  cp /tmp/vae/wan_2.1_vae.safetensors /comfyui/models/vae/
 
 # Optional: LightX2V 4-step LoRAs for I2V 14B.
 # Uncomment if your workflow uses them AND the Remix checkpoint does not already include Lightning.
 # hf_download Kijai/WanVideo_comfy Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors --local-dir /tmp/lora
-# cp /tmp/lora/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors /ComfyUI/models/loras/
+# cp /tmp/lora/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors /comfyui/models/loras/
 
 rm -rf /tmp/remix /tmp/t5 /tmp/vae /tmp/lora
-ls -lh /ComfyUI/models/diffusion_models/ /ComfyUI/models/text_encoders/ /ComfyUI/models/vae/
+ls -lh /comfyui/models/diffusion_models/ /comfyui/models/text_encoders/ /comfyui/models/vae/
 echo "Done."
