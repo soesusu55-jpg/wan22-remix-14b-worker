@@ -51,6 +51,16 @@ MODEL_LOW_FILE = os.environ.get(
 )
 
 _proc = None
+_COMFY_LOG = "/tmp/comfyui.log"
+
+
+def _comfy_log_tail(nchars=3000):
+    try:
+        with open(_COMFY_LOG, encoding="utf-8", errors="replace") as f:
+            data = f.read()
+        return data[-nchars:]
+    except Exception:
+        return "(could not read ComfyUI log)"
 
 
 def _start_comfyui():
@@ -58,15 +68,27 @@ def _start_comfyui():
     if _proc is not None and _proc.poll() is None:
         return
     # Skip auto-launch inside worker-comfyui if set; we launch explicitly.
+    # NOTE (2026-11-20): do NOT use stdout=PIPE without a reader — the
+    # child can block once the pipe fills, and its output is invisible.
+    # Redirect to a log file instead, and surface its tail in errors so
+    # a failed startup is diagnosable from the job error itself.
+    logf = open(_COMFY_LOG, "a", encoding="utf-8")
     _proc = subprocess.Popen(
         ["python3", "main.py", "--listen", "127.0.0.1", "--port", "8188"],
         cwd=COMFY_PATH,
-        stdout=subprocess.PIPE,
+        stdout=logf,
         stderr=subprocess.STDOUT,
         text=True,
     )
-    deadline = time.time() + 180
+    # Cold start (torch + ComfyUI + custom nodes) can take minutes on a
+    # fresh worker; 180s was too short and hid the real cause.
+    deadline = time.time() + 600
     while time.time() < deadline:
+        if _proc.poll() is not None:
+            raise RuntimeError(
+                f"ComfyUI exited early with code {_proc.returncode}.\n"
+                f"Log tail:\n{_comfy_log_tail()}"
+            )
         try:
             r = requests.get(f"{COMFY_URL}/system_stats", timeout=5)
             if r.status_code == 200:
@@ -74,7 +96,9 @@ def _start_comfyui():
         except Exception:
             pass
         time.sleep(2)
-    raise RuntimeError("ComfyUI did not become ready in 180s")
+    raise RuntimeError(
+        f"ComfyUI did not become ready in 600s.\nLog tail:\n{_comfy_log_tail()}"
+    )
 
 
 def _load_default_workflow():
