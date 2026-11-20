@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir "huggingface_hub>=0.27" runpod
 # Custom nodes required by api-workflow.json (same set as Gusdev06):
 # FastUnsharpSharpen (comfyui-vrgamedevgirl), Seed (rgthree-comfy),
 # KJNodes, and VideoHelperSuite (VHS_VideoCombine).
-RUN cd /ComfyUI/custom_nodes && \
+RUN mkdir -p /ComfyUI/custom_nodes && cd /ComfyUI/custom_nodes && \
   git clone https://github.com/vrgamegirl19/comfyui-vrgamedevgirl && \
   cd comfyui-vrgamedevgirl && git checkout 0.1.0 && cd .. && \
   git clone https://github.com/kijai/ComfyUI-KJNodes && \
