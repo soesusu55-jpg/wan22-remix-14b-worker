@@ -113,11 +113,22 @@ hf_download Comfy-Org/Wan_2.2_ComfyUI_Repackaged split_files/vae/wan_2.1_vae.saf
 cp /tmp/vae/split_files/vae/wan_2.1_vae.safetensors /comfyui/models/vae/ || \
   cp /tmp/vae/wan_2.1_vae.safetensors /comfyui/models/vae/
 
-# Optional: LightX2V 4-step LoRAs for I2V 14B.
-# Uncomment if your workflow uses them AND the Remix checkpoint does not already include Lightning.
-# hf_download Kijai/WanVideo_comfy Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors --local-dir /tmp/lora
-# cp /tmp/lora/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors /comfyui/models/loras/
+# LightX2V 4-step distill LoRAs for I2V 14B (2026-11-21).
+# The workflow loads them with LoraLoaderModelOnly on each expert
+# (high file on the high-noise model, low file on the low-noise model),
+# strength 1.0, 4 total steps, split at step 2, shift 5.
+# NOTE: these LoRAs were trained on official Wan2.2 weights; the Remix
+# checkpoint is a fine-tune of Wan2.2, so they usually transfer, but
+# quality/motion with Remix is untested. If the output looks wrong,
+# drop the LoRA nodes and go back to 8 steps / split 3 / shift 2.
+echo "Downloading LightX2V 4-step I2V LoRAs"
+hf_download lightx2v/Wan2.2-Distill-Loras wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step_1022.safetensors \
+  --local-dir /tmp/lora
+hf_download lightx2v/Wan2.2-Distill-Loras wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors \
+  --local-dir /tmp/lora
+cp /tmp/lora/wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step_1022.safetensors /comfyui/models/loras/
+cp /tmp/lora/wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors /comfyui/models/loras/
 
 rm -rf /tmp/remix /tmp/t5 /tmp/vae /tmp/lora
-ls -lh /comfyui/models/diffusion_models/ /comfyui/models/text_encoders/ /comfyui/models/vae/
+ls -lh /comfyui/models/diffusion_models/ /comfyui/models/text_encoders/ /comfyui/models/vae/ /comfyui/models/loras/
 echo "Done."

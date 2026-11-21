@@ -1,8 +1,8 @@
 {
   "id": "wan22-remix-14b-flf2v-10s",
   "revision": 0,
-  "last_node_id": 108,
-  "last_link_id": 228,
+  "last_node_id": 110,
+  "last_link_id": 230,
   "nodes": [
     {
       "id": 97,
@@ -114,7 +114,7 @@
         "cnr_id": "comfyui-kjnodes"
       },
       "widgets_values": [
-        8
+        4
       ],
       "title": "Steps",
       "color": "#1b4669",
@@ -138,7 +138,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 221
+          "link": 229
         }
       ],
       "outputs": [
@@ -156,7 +156,7 @@
         "ver": "0.3.45"
       },
       "widgets_values": [
-        2
+        5
       ]
     },
     {
@@ -177,7 +177,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 220
+          "link": 230
         }
       ],
       "outputs": [
@@ -195,7 +195,7 @@
         "ver": "0.3.45"
       },
       "widgets_values": [
-        2
+        5
       ]
     },
     {
@@ -269,7 +269,7 @@
         "cnr_id": "comfyui-kjnodes"
       },
       "widgets_values": [
-        3
+        2
       ],
       "title": "Split_step",
       "color": "#1b4669",
@@ -635,11 +635,11 @@
         "disable",
         0,
         "fixed",
-        8,
+        4,
         1,
         "euler",
         "simple",
-        3,
+        2,
         10000,
         "disable"
       ]
@@ -722,12 +722,12 @@
         "enable",
         -1,
         "randomize",
-        8,
+        4,
         1,
         "euler",
         "simple",
         0,
-        3,
+        2,
         "enable"
       ]
     },
@@ -878,6 +878,84 @@
         "pingpong": false,
         "save_output": true
       }
+    },
+    {
+      "id": 109,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        230,
+        -20
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 221
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            229
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step_1022.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 110,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        230,
+        110
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 220
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            230
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors",
+        1
+      ]
     }
   ],
   "links": [
@@ -1045,7 +1123,7 @@
       220,
       103,
       0,
-      55,
+      110,
       0,
       "MODEL"
     ],
@@ -1053,7 +1131,7 @@
       221,
       77,
       0,
-      54,
+      109,
       0,
       "MODEL"
     ],
@@ -1088,6 +1166,22 @@
       107,
       6,
       "IMAGE"
+    ],
+    [
+      229,
+      109,
+      0,
+      54,
+      0,
+      "MODEL"
+    ],
+    [
+      230,
+      110,
+      0,
+      55,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [

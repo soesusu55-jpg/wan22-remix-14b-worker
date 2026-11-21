@@ -84,10 +84,10 @@
     "class_type": "ModelSamplingSD3",
     "inputs": {
       "model": [
-        "77",
+        "109",
         0
       ],
-      "shift": 2
+      "shift": 5
     }
   },
   "55": {
@@ -97,10 +97,10 @@
     "class_type": "ModelSamplingSD3",
     "inputs": {
       "model": [
-        "103",
+        "110",
         0
       ],
-      "shift": 2
+      "shift": 5
     }
   },
   "57": {
@@ -206,7 +206,7 @@
     },
     "class_type": "PrimitiveInt",
     "inputs": {
-      "value": 3
+      "value": 2
     }
   },
   "68": {
@@ -215,7 +215,7 @@
     },
     "class_type": "PrimitiveInt",
     "inputs": {
-      "value": 8
+      "value": 4
     }
   },
   "7": {
@@ -288,6 +288,34 @@
       "save_metadata": true,
       "save_output": true,
       "trim_to_audio": false
+    }
+  },
+  "109": {
+    "_meta": {
+      "title": "LoraLoaderModelOnly (LightX2V high)"
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "77",
+        0
+      ],
+      "lora_name": "wan2.2_i2v_A14b_high_noise_lora_rank64_lightx2v_4step_1022.safetensors",
+      "strength_model": 1.0
+    }
+  },
+  "110": {
+    "_meta": {
+      "title": "LoraLoaderModelOnly (LightX2V low)"
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "103",
+        0
+      ],
+      "lora_name": "wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors",
+      "strength_model": 1.0
     }
   }
 }
